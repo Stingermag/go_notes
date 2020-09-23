@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/format.css" type="text/css">
+    <title>Notes</title>
+</head>
+<body>
+    <div class="nav">
+         <a href="/">Home</a>
+         <a href="/add/add">Add</a>
+         <a href="/view/notes">Notes</a>
+         <a href="https://github.com">View on Github</a>
+    </div>
+    <ul>
+        {{range . }}
+            <li><p>{{ .ID }} {{ .Ttl }} {{ .Mess }} </li>
+        {{end}}
+    </ul>
+</body>
+</html>

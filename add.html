@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/format.css" type="text/css">
+    <title>Add a note</title>
+</head>
+<body>
+    <div class="nav">
+         <a href="/">Home</a>
+         <a href="/add/add">Add</a>
+         <a href="/view/notes">Notes</a>
+         <a href="https://github.com">View on Github</a>
+    </div>
+    <form action="/save/{{.Title}}" method="POST" class="txtform">
+        <label><p class="lbls">Title</p></label>
+        <input type="text" class="frm" name="tname" placeholder="Enter the title of your article.."/>
+        <label><p class="lbls">Article</p></label>
+        <textarea name="body"></textarea>
+        <input type="submit" class="btn" value="Save" />
+    </form>
+</body>
+</html>
