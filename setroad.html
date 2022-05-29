@@ -16,30 +16,19 @@
     <a href="/roads/">Все дороги</a>
 </div>
 <form action="/setroad/add" method="POST" class="txtform">
-    <label><p class="lbls">Время фиксации</p></label>
-    <input type="datetime-local" id="vremya" name="vremya">
+    <label><p class="lbls">Название камеры</p></label>
+    <input type="text" class="frm" name="nazvanie" id="nazvanie" placeholder="Enter the title of your article.." >
 
-    <label><p class="lbls">Описание</p></label>
-    <input type="text" class="frm" name="opisanie" id="opisanie" placeholder="Enter the title of your article.." >
+    <label><p class="lbls">Тип камеры</p></label>
+    <input type="text" class="frm" name="tip_kameti" id="tip_kameti" placeholder="Enter the title of your article.." >
 
-    <label><p class="lbls">Скорость ТС</p></label>
-    <input type="text" class="frm" name="skorost" id="skorost" placeholder="Enter the title of your article.." >
+    <label><p class="lbls">Цель использования</p></label>
+    <input type="text" class="frm" name="cel_ispolzovaniya" id="cel_ispolzovaniya" placeholder="Enter the title of your article.." >
 
-    <label><p class="lbls">Максимальная скорость</p></label>
-    <input type="text" class="frm" name="max_skorist" id="max_skorist" placeholder="Enter the title of your article.." >
-
-    <label><p class="lbls">Автомобиль</p></label>
+    <label><p class="lbls">Объект</p></label>
     <div class="centernav">
-        <select class="frm" id="id_avtomobil" name="id_avtomobil" required>
-            {{range .Avto }}<option value="{{ .Id}}">{{ .Gosnoner}}</option>{{end}}
-
-        </select>
-    </div>
-
-    <label><p class="lbls">Камера</p></label>
-    <div class="centernav">
-        <select class="frm" id="id_kameri" name="id_kameri" required>
-            {{range .Kameri }}<option value="{{ .Id}}">{{ .Nazvanie}} {{ .Oblast}} {{ .Gorod}} {{ .Municipal_okrug}} {{ .Ylica}} {{ .Zem_ychastok}} </option>{{end}}
+        <select class="frm" id="id_objecta" name="id_objecta" required>
+            {{range . }}<option value="{{ .Id}}">{{ .Oblast}} {{ .Municipal_okrug}} {{ .Gorod}} {{ .Nasel_punkt}}  {{ .Ylica}}  {{ .Nazvanie}} {{ .Tip_objecta}} {{ .Nomer_uchastka}} {{ .Nomer}}  </option>{{end}}
 
         </select>
     </div>

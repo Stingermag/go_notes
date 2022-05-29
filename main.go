@@ -60,6 +60,19 @@ type FixationsAndMiddleSpeed struct {
 	CurrentKoef string
 }
 
+type Objecti struct {
+	Id              int
+	Nazvanie        string
+	Tip_objecta     string
+	Nomer_uchastka  string
+	Nomer           string
+	Gorod           string
+	Ylica           string
+	Nasel_punkt     string
+	Municipal_okrug string
+	Oblast          string
+}
+
 func Getkoefbyparams(w http.ResponseWriter, r *http.Request) {
 	kad_nomer := r.FormValue("nomer")
 	need_data := r.FormValue("need_data")
@@ -196,7 +209,7 @@ where municipal_okrug = ?;`,
 			&bk.Oblast,
 		)
 		raiting := rand.Float64()
-		if raiting > 0.5 {
+		if raiting < 0.5 {
 			bk.Raiting = strconv.FormatFloat(raiting, 'f', 6, 64)
 			roads = append(roads, bk)
 		}
@@ -596,64 +609,62 @@ left join kameri k on fixacii.id_kameri = k.id order by vremya desc `)
 	}
 }
 
-func SetRoads(w http.ResponseWriter, r *http.Request) {
-	vremya := r.FormValue("vremya")
-	opisanie := r.FormValue("opisanie")
-	skorost := r.FormValue("skorost")
-	max_skorist := r.FormValue("max_skorist")
-	id_avtomobil := r.FormValue("id_avtomobil")
-	id_kameri := r.FormValue("id_kameri")
+func SetCameras(w http.ResponseWriter, r *http.Request) {
+	nazvanie := r.FormValue("nazvanie")
+	tip_kameti := r.FormValue("tip_kameti")
+	cel_ispolzovaniya := r.FormValue("cel_ispolzovaniya")
+	id_objecta := r.FormValue("id_objecta")
 
 	db, err := sql.Open("mysql", "root:password@/mydiplom")
 	if err != nil {
 		panic(err)
 	}
-	_, err = db.Exec(`insert into fixacii  (vremya, opisanie, skorost,max_skorist,id_avtomobil, id_kameri)
-values (?,?,?,?,?,?);`,
-		vremya, opisanie, skorost, max_skorist, id_avtomobil, id_kameri)
+	_, err = db.Exec(`insert into kameri (nazvanie, tip_kameti, cel_ispolzovaniya,id_objecta)
+values (?,?,?,?);`,
+		nazvanie, tip_kameti, cel_ispolzovaniya, id_objecta)
 	if err != nil {
 		//panic(err)
 		println("обоже")
 	}
 	defer db.Close()
-	http.Redirect(w, r, "/fixations", http.StatusFound)
+	http.Redirect(w, r, "/roads", http.StatusFound)
 }
 
-func SetRoadsForm(w http.ResponseWriter, r *http.Request) {
+func SetCamerasForm(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("mysql", "root:password@/mydiplom")
 	if err != nil {
 		panic(err)
 	}
-	res, err := db.Query(`select id,gosnoner from avtomobili;`)
-	if err != nil {
-		//panic(err)
-		println("баги лох")
-	}
-	res2, err := db.Query(`select kameri.id,kameri.nazvanie,oblast,gorod,municipal_okrug,ylica,zem_ychastok from kameri
-left join object o on o.id = kameri.id_objecta
-left join kadastrivi_nomer kn on kn.id = o.id_kadastrovi;`)
+	res, err := db.Query(`select kn.id,nazvanie,tip_objecta,nomer_uchastka,nomer,gorod,ylica,nasel_punkt,municipal_okrug,oblast  from object
+left outer join kadastrivi_nomer kn on kn.id = object.id_kadastrovi
+left join dorogi d on kn.id = d.id_kadastr_nom;`)
 	if err != nil {
 		//panic(err)
 		println("баги лох")
 	}
 
 	defer db.Close()
-	var model AvtoKameri
-	model.Avto = make([]Avto, 0)
-	model.Kameri = make([]Kameri, 0)
+
+	objecti := make([]*Objecti, 0)
 	for res.Next() {
-		bk := new(Avto)
-		res.Scan(&bk.Id, &bk.Gosnoner)
-		model.Avto = append(model.Avto, *bk)
-	}
-	for res2.Next() {
-		bk := new(Kameri)
-		res2.Scan(&bk.Id, &bk.Nazvanie, &bk.Oblast, &bk.Gorod, &bk.Municipal_okrug, &bk.Ylica, &bk.Zem_ychastok)
-		model.Kameri = append(model.Kameri, *bk)
+		bk := new(Objecti)
+		res.Scan(
+			&bk.Id,
+			&bk.Nazvanie,
+			&bk.Tip_objecta,
+			&bk.Nomer_uchastka,
+			&bk.Nomer,
+			&bk.Gorod,
+			&bk.Ylica,
+			&bk.Nasel_punkt,
+			&bk.Municipal_okrug,
+			&bk.Oblast,
+		)
+		objecti = append(objecti, bk)
 	}
 
-	tmpl, _ := template.ParseFiles("setfixations.html")
-	err = tmpl.Execute(w, model)
+	tmpl, _ := template.ParseFiles("setroad.html")
+	err = tmpl.Execute(w, objecti)
 	if err != nil {
 		return
 	}
@@ -721,8 +732,9 @@ func main() {
 	http.HandleFunc("/setfixation/", SetfixationForm)
 	http.HandleFunc("/fixations/", viewFixations)
 
-	http.HandleFunc("/setroad/add", SetRoads)
-	http.HandleFunc("/setroad/", SetRoadsForm)
+	http.HandleFunc("/setroad/add", SetCameras)
+	http.HandleFunc("/setroad/", SetCamerasForm)
+
 	http.HandleFunc("/roads/", viewRoads)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
