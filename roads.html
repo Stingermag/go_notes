@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/format.css" type="text/css">
+    <title>Notes</title>
+</head>
+<body>
+<div class="nav">
+    <a href="/getkoefbyparams/">Получить рейтинг по параметрам</a>
+    <a href="/getcurrentkoef/">Получить текущий рейтинг</a>
+    <a href="/getmiddlespeed/">Получить среднюю скорость</a>
+    <a href="/getqueue/">Получить среднюю длинну очереди</a>
+    <a href="/setfixation/">Добавление фиксации</a>
+    <a href="/fixations/">Фиксации</a>
+    <a href="/roads/">Дороги</a>
+</div>
+
+<table class="table">
+    <caption>Таблица всех дорог</caption>
+    <tr>
+        <th>Номер участка</th>
+        <th>Кадастровый номер</th>
+        <th>Название участка</th>
+        <th>Город</th>
+        <th>Улица</th>
+        <th>Населенный пункт</th>
+        <th>Поселение</th>
+        <th>Муниципальны округ</th>
+        <th>Область</th>
+    </tr>
+    {{range . }}
+    <tr>
+        <td>{{ .Nomer_uchastka }}</td>
+        <td><a href="https://egrp365.org/map/?kadnum={{.Nomer }}">{{ .Nomer }}</a></td>
+        <td>{{ .Nazvanie_uchatka }}</td>
+        <td>{{ .Gorod }}</td>
+        <td>{{ .Ylica }}</td>
+        <td>{{ .Nasel_punkt }}</td>
+        <td>{{ .Poselenie }}</td>
+        <td>{{ .Municipal_okrug }}</td>
+        <td>{{ .Oblast }}</td>
+    </tr>
+    {{end}}
+</table>
+
+
+</body>
+</html>

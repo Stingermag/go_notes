@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/format.css" type="text/css">
+    <title>Add a note</title>
+</head>
+<body>
+<div class="nav">
+    <a href="/getkoefbyparams/">Получить рейтинг по параметрам</a>
+    <a href="/getcurrentkoef/">Получить текущий рейтинг</a>
+    <a href="/getmiddlespeed/">Получить среднюю скорость</a>
+    <a href="/getqueue/">Получить среднюю длинну очереди</a>
+    <a href="/setfixation">Добавление фиксации</a>
+    <a href="/fixations/">Фиксации</a>
+    <a href="/roads/">Дороги</a>
+</div>
+<form action="/setfixations/add" method="POST" class="txtform">
+    <label><p class="lbls">Время фиксации</p></label>
+    <input type="datetime-local" id="vremya" name="vremya">
+
+    <label><p class="lbls">Описание</p></label>
+    <input type="text" class="frm" name="opisanie" id="opisanie" placeholder="Enter the title of your article.." >
+
+    <label><p class="lbls">Скорость ТС</p></label>
+    <input type="text" class="frm" name="skorost" id="skorost" placeholder="Enter the title of your article.." >
+
+    <label><p class="lbls">Максимальная скорость</p></label>
+    <input type="text" class="frm" name="max_skorist" id="max_skorist" placeholder="Enter the title of your article.." >
+
+    <label><p class="lbls">Автомобиль</p></label>
+    <div class="centernav">
+        <select class="frm" id="id_avtomobil" name="id_avtomobil" required>
+            {{range .Avto }}<option value="{{ .Id}}">{{ .Gosnoner}}</option>{{end}}
+
+        </select>
+    </div>
+
+    <label><p class="lbls">Камера</p></label>
+    <div class="centernav">
+        <select class="frm" id="id_kameri" name="id_kameri" required>
+            {{range .Kameri }}<option value="{{ .Id}}">{{ .Nazvanie}} {{ .Oblast}} {{ .Gorod}} {{ .Municipal_okrug}} {{ .Ylica}} {{ .Zem_ychastok}} </option>{{end}}
+
+        </select>
+    </div>
+    <input type="submit" class="btn" value="Добавить"/>
+    <br>
+</form>
+</body>
+</html>

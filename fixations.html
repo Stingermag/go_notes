@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/format.css" type="text/css">
+    <title>Notes</title>
+</head>
+<body>
+<div class="nav">
+    <a href="/getkoefbyparams/">Получить рейтинг по параметрам</a>
+    <a href="/getcurrentkoef/">Получить текущий рейтинг</a>
+    <a href="/getmiddlespeed/">Получить среднюю скорость</a>
+    <a href="/getqueue/">Получить среднюю длинну очереди</a>
+    <a href="/setfixation/">Добавление фиксации</a>
+    <a href="/fixations/">Фиксации</a>
+    <a href="/roads/">Дороги</a>
+</div>
+
+<table class="table">
+    <caption>Таблица всех фиксаций</caption>
+    <tr>
+        <th>Дата</th>
+        <th>Тип фиксации</th>
+        <th>Камера</th>
+        <th>Описание</th>
+        <th>Скорость ТС</th>
+        <th>Допустимая скорость</th>
+        <th>Госномер</th>
+        <th>Марка</th>
+        <th>Модель</th>
+    </tr>
+    {{range . }}
+    <tr>
+        <td>{{ .Vremya }}</td>
+        <td>{{ .Cel_ispolzovaniya }}</td>
+        <td>{{ .Nazvanie }}</td>
+        <td>{{ .Opisanie }}</td>
+        <td>{{ .Skorost }}</td>
+        <td>{{ .Max_skorist }}</td>
+        <td><a href="https://avtocod.ru/proverkaavto/{{ .Gosnoner }}">{{ .Gosnoner }}</a></td>
+        <td>{{ .Marka }}</td>
+        <td>{{ .Model }}</td>
+    </tr>
+    {{end}}
+</table>
+
+
+</body>
+</html>
