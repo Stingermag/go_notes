@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/format.css" type="text/css">
+    <title>Add a note</title>
+</head>
+<body>
+<div class="nav">
+    <a href="/getkoefbyparams/">Рейтинг по параметрам</a>
+    <a href="/getlowraitingroads/">Дороги с низким рейтингом</a>
+    <a href="/getcurrentkoef/">Текущий рейтинг</a>
+    <a href="/getmiddlespeed/">Средняя скорость</a>
+    <a href="/getqueue/">Среднюю длинна очереди</a>
+    <a href="/fixations/">Все фиксации</a>
+    <a href="/roads/">Все дороги</a>
+</div>
+<form action="/getkoefbyparams/get" method="POST" class="txtform">
+
+    <label><p class="lbls">Выберети параметры и дорогу, на которой хотите вычислить рейтинг</p></label>
+    <div class="centernav">
+        <select class="frm" id="nomer" name="nomer" required>
+            {{range . }}<option value="{{ .Nomer}}">{{ .Nomer_uchastka }} {{ .Nomer }} {{ .Nazvanie_uchatka }} {{ .Gorod }} {{ .Ylica }} {{ .Nasel_punkt }} {{ .Poselenie }} {{ .Municipal_okrug }} {{ .Oblast }}</option>{{end}}
+        </select>
+    </div>
+
+    <label><p class="lbls">Какие параметры использовать при рассчете</p></label>
+    <br>
+
+    <input type="checkbox" id="need_data" name="need_data">
+    <label><p class="lbls">Учитывать выбранное время</p></label>
+    <input type="datetime-local" id="vremya" name="vremya">
+    <br>
+    <input type="checkbox" id="need_car" name="need_car">
+    <label><p class="lbls">Учитывать габариты автомобиля</p></label>
+    <br>
+    <input type="checkbox" id="need_speed" name="need_speed">
+    <label><p class="lbls">Учитывать скорость автомобиля</p></label>
+    <br>
+    <input type="checkbox" id="need_road" name="need_road">
+    <label><p class="lbls">Учитывать характеристики дорог</p></label>
+
+    <input type="submit" class="btn" value="Рассчет"/>
+    <br>
+</form>
+</body>
+</html>

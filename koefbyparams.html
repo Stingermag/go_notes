@@ -16,8 +16,10 @@
     <a href="/roads/">Все дороги</a>
 </div>
 
+
+
 <table class="table">
-    <caption>Таблица всех фиксаций</caption>
+    <caption>Данные рассчитаны на основе показателей фиксаций</caption>
     <tr>
         <th>Дата</th>
         <th>Тип фиксации</th>
@@ -29,7 +31,7 @@
         <th>Марка</th>
         <th>Модель</th>
     </tr>
-    {{range . }}
+    {{range .Fixations }}
     <tr>
         <td>{{ .Vremya }}</td>
         <td>{{ .Cel_ispolzovaniya }}</td>
@@ -44,7 +46,7 @@
     {{end}}
 </table>
 
-<a href="/setfixation/">Добавление фиксации</a>
+<p>Коэффициент дороги по параметрам: {{ .CurrentKoef }} </p>
 
 </body>
 </html>

@@ -140,6 +140,10 @@ p {
     border-collapse: collapse;
 }
 
+.table caption{
+    font-size: 20px;
+}
+
 .table th {
     font-weight: bold;
     padding: 5px;

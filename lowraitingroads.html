@@ -16,6 +16,8 @@
     <a href="/roads/">Все дороги</a>
 </div>
 
+
+
 <table class="table">
     <caption>Таблица всех дорог</caption>
     <tr>
@@ -28,6 +30,7 @@
         <th>Поселение</th>
         <th>Муниципальны округ</th>
         <th>Область</th>
+        <th>Рейтинг</th>
     </tr>
     {{range . }}
     <tr>
@@ -40,10 +43,10 @@
         <td>{{ .Poselenie }}</td>
         <td>{{ .Municipal_okrug }}</td>
         <td>{{ .Oblast }}</td>
+        <td>{{ .Raiting }}</td>
     </tr>
     {{end}}
 </table>
-<a href="/setroad/">Добавление фиксации</a>
 
 </body>
 </html>
